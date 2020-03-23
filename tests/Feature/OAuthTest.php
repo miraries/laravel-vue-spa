@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use App\User;
-use Mockery as m;
-use Tests\TestCase;
 use Illuminate\Support\Str;
-use Laravel\Socialite\Facades\Socialite;
-use PHPUnit\Framework\Assert as PHPUnit;
 use Illuminate\Testing\TestResponse;
+use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Mockery as m;
+use PHPUnit\Framework\Assert as PHPUnit;
+use Tests\TestCase;
 
 class OAuthTest extends TestCase
 {
@@ -44,10 +44,10 @@ class OAuthTest extends TestCase
     public function create_user_and_return_token()
     {
         $this->mockSocialite('github', [
-            'id' => '123',
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'token' => 'access-token',
+            'id'           => '123',
+            'name'         => 'Test User',
+            'email'        => 'test@example.com',
+            'token'        => 'access-token',
             'refreshToken' => 'refresh-token',
         ]);
 
@@ -58,16 +58,16 @@ class OAuthTest extends TestCase
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => 'test@example.com',
         ]);
 
         $this->assertDatabaseHas('oauth_providers', [
-            'user_id' => User::first()->id,
-            'provider' => 'github',
+            'user_id'          => User::first()->id,
+            'provider'         => 'github',
             'provider_user_id' => '123',
-            'access_token' => 'access-token',
-            'refresh_token' => 'refresh-token',
+            'access_token'     => 'access-token',
+            'refresh_token'    => 'refresh-token',
         ]);
     }
 
@@ -76,14 +76,14 @@ class OAuthTest extends TestCase
     {
         $user = factory(User::class)->create(['email' => 'test@example.com']);
         $user->oauthProviders()->create([
-            'provider' => 'github',
+            'provider'         => 'github',
             'provider_user_id' => '123',
         ]);
 
         $this->mockSocialite('github', [
-            'id' => '123',
-            'email' => 'test@example.com',
-            'token' => 'updated-access-token',
+            'id'           => '123',
+            'email'        => 'test@example.com',
+            'token'        => 'updated-access-token',
             'refreshToken' => 'updated-refresh-token',
         ]);
 
@@ -92,8 +92,8 @@ class OAuthTest extends TestCase
             ->assertSuccessful();
 
         $this->assertDatabaseHas('oauth_providers', [
-            'user_id' => $user->id,
-            'access_token' => 'updated-access-token',
+            'user_id'       => $user->id,
+            'access_token'  => 'updated-access-token',
             'refresh_token' => 'updated-refresh-token',
         ]);
     }
@@ -121,7 +121,7 @@ class OAuthTest extends TestCase
 
         if ($user) {
             $mock->shouldReceive('user')
-                ->andReturn((new SocialiteUser)->setRaw($user)->map($user));
+                ->andReturn((new SocialiteUser())->setRaw($user)->map($user));
         } else {
             $mock->shouldReceive('redirect')
                 ->andReturn(redirect('https://url-to-provider'));

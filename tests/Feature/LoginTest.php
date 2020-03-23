@@ -21,7 +21,7 @@ class LoginTest extends TestCase
     public function authenticate()
     {
         $this->postJson('/api/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'password',
         ])
         ->assertSuccessful()
@@ -42,7 +42,7 @@ class LoginTest extends TestCase
     public function log_out()
     {
         $token = $this->postJson('/api/login', [
-            'email' => $this->user->email,
+            'email'    => $this->user->email,
             'password' => 'password',
         ])->json()['token'];
 

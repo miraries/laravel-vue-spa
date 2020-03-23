@@ -3,9 +3,9 @@
 namespace Tests\Browser;
 
 use App\User;
-use Tests\DuskTestCase;
 use Tests\Browser\Pages\Home;
 use Tests\Browser\Pages\Register;
+use Tests\DuskTestCase;
 
 class RegisterTest extends DuskTestCase
 {
@@ -20,11 +20,11 @@ class RegisterTest extends DuskTestCase
     public function register_with_valid_data()
     {
         $this->browse(function ($browser) {
-            $browser->visit(new Register)
+            $browser->visit(new Register())
                 ->submit([
-                    'name' => 'Test User',
-                    'email' => 'test@test.app',
-                    'password' => 'password',
+                    'name'                  => 'Test User',
+                    'email'                 => 'test@test.app',
+                    'password'              => 'password',
                     'password_confirmation' => 'password',
                 ])
                 ->assertPageIs(Home::class);
@@ -37,11 +37,11 @@ class RegisterTest extends DuskTestCase
         $user = factory(User::class)->create();
 
         $this->browse(function ($browser) use ($user) {
-            $browser->visit(new Register)
+            $browser->visit(new Register())
                 ->submit([
-                    'name' => 'Test User',
-                    'email' => $user->email,
-                    'password' => 'password',
+                    'name'                  => 'Test User',
+                    'email'                 => $user->email,
+                    'password'              => 'password',
                     'password_confirmation' => 'password',
                 ])
                 ->assertSee('The email has already been taken.');

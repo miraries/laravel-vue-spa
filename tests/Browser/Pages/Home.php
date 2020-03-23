@@ -19,7 +19,8 @@ class Home extends Page
     /**
      * Assert that the browser is on the page.
      *
-     * @param  Browser  $browser
+     * @param Browser $browser
+     *
      * @return void
      */
     public function assert(Browser $browser)
@@ -35,7 +36,7 @@ class Home extends Page
     public function elements()
     {
         return [
-            '@navbar-toggle' => '.navbar .navbar-toggler',
+            '@navbar-toggle'          => '.navbar .navbar-toggler',
             '@navbar-dropdown-toggle' => '.navbar-nav.ml-auto .dropdown-toggle',
         ];
     }
@@ -43,7 +44,8 @@ class Home extends Page
     /**
      * Click on the log out link.
      *
-     * @param  \Laravel\Dusk\Browser $browser
+     * @param \Laravel\Dusk\Browser $browser
+     *
      * @return void
      */
     public function clickLogout($browser)
